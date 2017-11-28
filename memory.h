@@ -1,0 +1,95 @@
+/* memory.h
+ * Jason Iskenderian and Alexa Bosworth
+ * 11/12/17
+ * Purpose: Provides interface function headers and descriptions for the memory 
+ * module
+ */
+
+#ifndef MEMORY_INCLUDED
+#define MEMORY_INCLUDED
+
+#define T Memory_T
+typedef struct T *T;
+
+#include <stdint.h>
+#include <stdio.h>
+
+
+/* new_mem
+ * Purpose: to allocate a new memory space
+ * Arguments: int - the number of segments in the new mem
+ * Returns: Memory_T - a pointer to the new memory space
+ */
+T new_mem(int num_segs);
+
+/* free_mem
+ * Purpose: to free the memory used by the memory space
+ * Arguments: Memory_T *- a pointer to the memory space
+ * Returns: none
+ */
+void free_mem(T mem);
+
+
+/* get_word
+ * Purpose: To retrieve a specified word from an instance of Memory_T
+ * Arguments: Memory_T *- the memory instance to access
+ *            uint32_t - the segment id of the segment to access
+ *            int - the offset of the word in the segment
+ * Returns: uint32_t - the word found at the specified location
+ */
+uint32_t get_word(T mem, uint32_t id, uint32_t word_num);
+
+/* set_word
+ * Purpose: sets a word at the specified location in the memory
+ * Arguments: Memory_T *- the instance of memory to access
+ *            uint32_t - the segment id
+ *            int - the offset of the word to change
+ *            uint32_t - the new value of that word
+ * Returns: none
+ */
+void set_word(T mem, uint32_t id, uint32_t word_num, uint32_t word);
+
+/* map_seg
+ * Purpose: to create a new mapped segment with an unused id and a specified 
+ * number of words
+ *          with all words initialized to 0
+ * Arguments: Memory_T *- the instance of memory to map a new segment into
+ *            uint32_t - the number of words that will be in that segment
+ * Returns: int - the id of the segment
+ */
+uint32_t map_seg(T mem, uint32_t num_words);
+
+/* unmap_seg
+ * Purpose: to "free" a segment and allow access to the id
+ * Arguments: Memory_T *- the memory to access
+ *            uint32_t - the id of the segment to unmap
+ * Returns: none
+ */
+void unmap_seg(T mem, uint32_t id);
+
+/* load_file
+ * Purpose: To read in a um binary and load the program into the first segment
+ * Arguments: Memory_T *- the memory to access
+ *            FILE * - A pointer to the file to read from
+ * Returns: none
+ */
+void load_file(T mem, FILE *file);
+
+/* change_program
+ * Purpose: To duplicate the segment specified by the id and place it in the
+ * program $m[0]
+ * Arguments: Memory_T * - the memory to access
+ *            uint32_T - the id to be duplicated
+ * Returns: none
+ */
+void change_program(T mem, uint32_t id);
+
+/* check_avail
+ * Purpose: a function for testing by printing elements of the memory stack
+ * Arguments: Memory_T * - the memory to access
+ * Returns: none
+ */
+void check_avail(T mem);
+
+#undef T
+#endif
