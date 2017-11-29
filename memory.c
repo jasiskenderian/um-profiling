@@ -14,11 +14,11 @@
 #include <stdint.h>
 
 /* Memory struct */
- struct Memory_T {
+ /*struct Memory_T {
         Stack_T available;
         uint32_t **segments;
         unsigned num_segs;
-};
+};*/
 
 
 Memory_T new_mem(int num_segs)
@@ -58,11 +58,11 @@ void free_mem(Memory_T mem)
 
 }
 
-uint32_t get_word(Memory_T mem, uint32_t id, uint32_t word_num)
+/*uint32_t get_word(Memory_T mem, uint32_t id, uint32_t word_num)
 {
         return mem->segments[id][word_num];
+}*/
 
-}
 
 void set_word(Memory_T mem, uint32_t id, uint32_t word_num, uint32_t word)
 {
