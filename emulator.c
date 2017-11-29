@@ -132,7 +132,7 @@ void run(Emulator_T em)
         while (opcode != 15) {
                 instruction = get_word(em->mem, 0, em->pc);
                 opcode = (instruction & OP_MASK) >> OP_SHIFT;
-                
+
                 switch(opcode) {
                         /* sentinel value */
                         case 15:
@@ -148,7 +148,7 @@ void run(Emulator_T em)
                         case 12:
                                 regB = (REGB_MASK & instruction) >> B_SHIFT;
                                 regC = (REGC_MASK & instruction);
-                                //fprintf(stderr, "REGB: %u REGC: %u\n", regB, 
+                                //fprintf(stderr, "REGB: %u REGC: %u\n", regB,
                                 //regC);
                                 load_program(em, regB, regC);
                                 break;
@@ -193,7 +193,7 @@ void run(Emulator_T em)
                                 regA = (REGA_MASK & instruction) >> A_SHIFT;
                                 regB = (REGB_MASK & instruction) >> B_SHIFT;
                                 regC = (REGC_MASK & instruction);
-                                em->registers[regA] = (em->registers[regB] / 
+                                em->registers[regA] = (em->registers[regB] /
                                                 em->registers[regC]);
                                 em->pc++;
                                 break;
@@ -202,7 +202,7 @@ void run(Emulator_T em)
                                 regA = (REGA_MASK & instruction) >> A_SHIFT;
                                 regB = (REGB_MASK & instruction) >> B_SHIFT;
                                 regC = (REGC_MASK & instruction);
-                                em->registers[regA] = (em->registers[regB] * 
+                                em->registers[regA] = (em->registers[regB] *
                                                 em->registers[regC]) % MAX;
                                 em->pc++;
                                 break;
@@ -211,7 +211,7 @@ void run(Emulator_T em)
                                 regA = (REGA_MASK & instruction) >> A_SHIFT;
                                 regB = (REGB_MASK & instruction) >> B_SHIFT;
                                 regC = (REGC_MASK & instruction);
-                                em->registers[regA] = (em->registers[regB] + 
+                                em->registers[regA] = (em->registers[regB] +
                                                 em->registers[regC]) % MAX;
                                 em->pc++;
                                 break;
@@ -239,7 +239,7 @@ void run(Emulator_T em)
                                 cond_move(em, regA, regB, regC);
                                 em->pc++;
                                 break;
-                }   
+                }
 
         }
 }
@@ -290,13 +290,13 @@ void nand(Emulator_T em, uint32_t regA, uint32_t regB, uint32_t regC)
 
 void store(Emulator_T em, uint32_t regA, uint32_t regB, uint32_t regC)
 {
-        set_word(em->mem, em->registers[regA], em->registers[regB], 
+        set_word(em->mem, em->registers[regA], em->registers[regB],
                         em->registers[regC]);
 }
 
 void load(Emulator_T em, uint32_t regA, uint32_t regB, uint32_t regC)
 {
-        em->registers[regA] = get_word(em->mem, em->registers[regB], 
+        em->registers[regA] = get_word(em->mem, em->registers[regB],
                         em->registers[regC]);
 }
 
