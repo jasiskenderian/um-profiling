@@ -70,35 +70,35 @@ void set_word(Memory_T mem, uint32_t id, uint32_t word_num, uint32_t word)
 
 }
 
-uint32_t map_seg(Memory_T mem, uint32_t num_words)
-{
-        /* Resizes the memory if memory stack has no available locations */
-        Stack_T stack = mem->available;
+// uint32_t map_seg(Memory_T mem, uint32_t num_words)
+// {
+//         /* Resizes the memory if memory stack has no available locations */
+//         Stack_T stack = mem->available;
 
-        if (Stack_empty(stack)) {
-                mem->segments = realloc(mem->segments, sizeof(uint32_t *) *
-                                mem->num_segs * 2);
-                unsigned segs = mem->num_segs;
-                for (int i = segs; (unsigned) i < segs * 2;
-                                i++) {
-                        mem->segments[i] = NULL;
-                        Stack_push(mem->available, (void *)(uint64_t)i);
-                }
-                mem->num_segs *= 2;
-        }
-        /* id is initialized with an available location from the memory stack */
-        uint32_t id = (uint32_t)(uint64_t)Stack_pop(mem->available);
-        mem->segments[id] = malloc(sizeof(uint32_t) * (num_words + 1));
-        for (int i = 0; (unsigned)i < num_words; i++) {
-                mem->segments[id][i] = 0;
-        }
-        /* sets a sentinel for end of segment*/
-        mem->segments[id][num_words] = 0xF0000000;
+//         if (Stack_empty(stack)) {
+//                 mem->segments = realloc(mem->segments, sizeof(uint32_t *) *
+//                                 mem->num_segs * 2);
+//                 unsigned segs = mem->num_segs;
+//                 for (int i = segs; (unsigned) i < segs * 2;
+//                                 i++) {
+//                         mem->segments[i] = NULL;
+//                         Stack_push(mem->available, (void *)(uint64_t)i);
+//                 }
+//                 mem->num_segs *= 2;
+//         }
+//         /* id is initialized with an available location from the memory stack */
+//         uint32_t id = (uint32_t)(uint64_t)Stack_pop(mem->available);
+//         mem->segments[id] = malloc(sizeof(uint32_t) * (num_words + 1));
+//         for (int i = 0; (unsigned)i < num_words; i++) {
+//                 mem->segments[id][i] = 0;
+//         }
+//         /* sets a sentinel for end of segment*/
+//         mem->segments[id][num_words] = 0xF0000000;
 
 
-        return id;
+//         return id;
 
-}
+// }
 
 void unmap_seg(Memory_T mem, uint32_t id)
 {
